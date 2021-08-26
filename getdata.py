@@ -16,17 +16,17 @@ while True:
         print(content)
     except:
         break
-# while True:
-#     content=str(ser.readline().decode("utf-8")[:-2])
-#     if(content=="Setup Finished..."):
-#         for i in range(1,17):
-#             for j in range(1,18):
-#                 content=str(ser.readline().decode("utf-8")[:-2])
-#                 if(j!=1):
-#                     ws.cell(row=j,column=i,value=float(content))
-#                 else:
-#                     ws.cell(row=j,column=i,value=content)
-#         break
+while True:
+    content=str(ser.readline().decode("utf-8")[:-2])
+    if(content=="Setup Finished..."):
+        for i in range(1,17):
+            for j in range(1,18):
+                content=str(ser.readline().decode("utf-8")[:-2])
+                if(j!=1):
+                    ws.cell(row=j,column=i,value=float(content))
+                else:
+                    ws.cell(row=j,column=i,value=content)
+        break
 wb.save(name)
 wb=load_workbook(name)
 sheet=wb["Sheet"]

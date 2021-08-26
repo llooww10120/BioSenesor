@@ -44,19 +44,19 @@ void setup() {
   digitalWrite(en, LOW);
   
   Serial.begin(9600);
-  Serial.println("Setup Finished...");
+//  Serial.println("Setup Finished...");
 }
 
 void loop() {
   for (int i = 0; i < 16; i ++) {
-    Serial.print("Multiplexer");
-    Serial.println(i);
+//    Serial.print("Multiplexer");
+//    Serial.println(i);
     readMux(i);
-     Serial.println("Done");
-     Serial.println("");
+//     Serial.println("Done");
+//     Serial.println("");
   }
-  Serial.println("ALL DONE");
-  while(1);
+//  Serial.println("ALL DONE");
+//  while(10);
 }
 
  //second level multiplexer select
@@ -124,8 +124,8 @@ int readMux(int channel) {
     Vout=(buffer)/1024.0;
     buffer=Vout/(Vin-Vout); 
     R2=R1*buffer;
-    Serial.print(number);
-    Serial.print(":");
+//    Serial.print(number);
+//    Serial.print(":");
     Serial.println(R2);
     if(number<255){
       number++;
