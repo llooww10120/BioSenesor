@@ -52,19 +52,30 @@ def humidtest(sensor):
 
 def getpos(pos):
     cor=[]
+    broken = []
     for i in range(25):
         for j in range(10):
             if pos[i-1][j-1]==1:
                 cor.append([j,i])
-    return cor
-def plotmap(cor):
+            elif pos[i-1][j-1]==2:
+                broken.append([j,i])
+
+    return cor, broken
+
+def plotmap(cor,broken):
     x,y=zip(*cor)
-    plt.scatter(x,y)
+    x1,y1 =zip(*broken)
+    fig = plt.figure()
+    plt.scatter(x,y,color = "blue")
+    plt.scatter(x1,y1,color = "red")
     plt.gca().invert_yaxis()
+    
+    
     plt.xlim(0,10)
-    plt.ylim(25,0)
+    plt.ylim(0,25)
     plt.show()
 
 if __name__=="__main__":
-    # plotmap(getpos(biosensor))       
-    print(humidtest(sensorlist))
+    cor,broken = getpos(humidtest(sensorlist))   
+    plotmap(cor,broken)         
+  
