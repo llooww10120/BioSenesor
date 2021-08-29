@@ -39,14 +39,15 @@ def humidtest(sensor):
     for a in range(25):
         for b in range(10):
             data =float(sensor[a][b])
-            if data < 8000:            #潮濕
+            if data < 8000 and data >100:            #潮濕
                     biosensor[a][b] = 1 
-            elif data > 8000 and data< 50000:          #乾燥
+                    print(a,b)
+            elif data > 8000 and data< 80000:          #乾燥
                     biosensor[a][b] = 0
-            elif data > 50000 :         #錯誤點
+            elif data > 80000 :         #錯誤_開路點
                     biosensor[a][b] = 2 
-            elif data == 0:
-                    biosensor[a][b] = "blank"        
+            elif data <100:
+                    biosensor[a][b] = 2  #錯誤_短路點        
     return biosensor
 
 

@@ -36,16 +36,16 @@ def define_layout(obj, cols=1, rows=1):
         method(trg, cols, rows)
 
 def button_event01():
-    #print(var.get())
-    # mylabel.configure(text='my favourite fruit is ' + var.get())
+    print(var.get())
+    mylabel.configure(text='my favourite fruit is ' + var.get())
 
 def button_event02():
-    #print(var.get())
-    # mylabel.configure(text='my favourite fruit is ' + var.get())
+    print(var.get())
+    mylabel.configure(text='my favourite fruit is ' + var.get())
 
 def button_event03():
-    #print(var.get())
-    # mylabel.configure(text='my favourite fruit is ' + var.get())    
+    print(var.get())
+    mylabel.configure(text='my favourite fruit is ' + var.get())    
 
 
 window = tk.Tk()
@@ -78,16 +78,16 @@ lbl_title1.grid(column=0, row=0, sticky=align_mode)
 lbl_title2.grid(column=0, row=1, sticky=align_mode)
 
 
-optionList = ['adc','bdacd','csca']
+optionList = ['2021-08-27 04:22:00','2021-08-27 04:22:02','張育瑋可以來做專題嗎']
 var = tk.StringVar(div1)
 var.set(optionList[0])
 
 bt1 = tk.OptionMenu(div3,var,*optionList)
 bt1.pack(pady=10)
-bt1.config(width=10, font=('Helvetica', 12))
+bt1.config(width=10, font=('Helvetica', 6))
 bt1.pack(side="top")
 
-labelTest = tk.Label(text= "", font=('Helvetica', 12), fg='red')
+labelTest = tk.Label(text= "", font=('Helvetica', 6), fg='red')
 # labelTest.pack()  
 
 # def callback(*args):
