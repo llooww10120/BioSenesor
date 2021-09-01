@@ -3,14 +3,14 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
 import time
 
-ser = serial.Serial("/dev/ttyACM0",9600)
-name="text1.xlsx"
+ser = serial.Serial("COM3",115200)
+localtime=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
+name=localtime[:10]+".csv"
 wb=Workbook()
 ws=wb.active
-localtime=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
 rownum=1
 
-while localtime <= "2021-08-30 10:45:00":
+while localtime <= "2021-09-01 17:50:00":
     localtime=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
     # content=str(ser.readline().decode("utf-8")[:-2])
     # print(str(ser.readline().decode().replace('\n','')=="ALL DONE\r"))
