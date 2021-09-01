@@ -8,19 +8,20 @@ def time_cal(starttime,stoptime):
     mint=(time_scale%3600)//60
     sec=((time_scale%3600)%60)
     return str(hour)+":"+str(mint)+":"+str(sec)
-wb=load_workbook('text.xlsx')
+wb=load_workbook('text1.xlsx')
 sheet=wb["Sheet"]
 a=sheet["A"]
-b=sheet["B"]
+b=sheet["M"]
 ax=[]
 by=[]
 for cell in a:
     ax.append(cell.value[-8:])
 for cell in b:
-    temp=cell.value
+    temp=float(cell.value.replace('_x000D_','')[3:])
     by.append(temp)
 by=by[1:]
 ax=ax[1:]
+
 min_index=by.index(min(by))
 min_time=ax[min_index]
 start_time=ax[0]
@@ -30,6 +31,7 @@ plt.plot(ax,by,color="blue",linewidth=1,marker="None")
 plt.plot(by[min_index])
 show_min='['+str(by[min_index])+']'+"\nused time :"+time_cal(start_time,min_time)
 plt.xlabel("time")
+
 plt.ylabel("Ohm")
 plt.annotate(show_min,xytext=(ax[min_index],by[min_index]),xy=(ax[min_index],by[min_index]),color='r')
 plt.savefig("test.png")

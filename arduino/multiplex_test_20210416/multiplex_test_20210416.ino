@@ -12,9 +12,9 @@ int s2_2 = 6;
 int s1_2 = 5;
 int s0_2 = 4;
 
-int Vin=5;        //voltage at 5V pin of arduino
+float Vin=3.3;        //voltage at 5V pin of arduino
 float Vout=0;     //voltage at A0 pin of arduino
-float R1=5100;    //value of known resistance
+float R1=18000;    //value of known resistance
 float R2=0;       //value of unknown resistance
 float buffer=0; 
 int number = 0;   //number of each resistance
@@ -43,7 +43,7 @@ void setup() {
   digitalWrite(s3_2, LOW);
   digitalWrite(en, LOW);
   
-  Serial.begin(9600);
+  Serial.begin(115200);
 //  Serial.println("Setup Finished...");
 }
 
@@ -122,10 +122,11 @@ int readMux(int channel) {
     int value = analogRead(sig);// Get Lux value
     buffer=value*Vin;
     Vout=(buffer)/1024.0;
+//    Serial.println(5*analogRead(sig)/1023.0*1000);
     buffer=Vout/(Vin-Vout); 
     R2=R1*buffer;
-//    Serial.print(number);
-//    Serial.print(":");
+    Serial.print(number);
+    Serial.print(":");
     Serial.println(R2);
     if(number<255){
       number++;
