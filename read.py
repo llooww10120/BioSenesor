@@ -1,17 +1,20 @@
+<<<<<<< HEAD
 import serial
-from openpyxl import Workbook
-from openpyxl import load_workbook
 import time
 import seat as se
-ser = serial.Serial("COM3",9600)
-name="text1.xlsx"
-wb=Workbook()
-ws=wb.active
+listin=[]
+
+ser = serial.Serial("/dev/ttyACM0",9600)
+
 localtime=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
-rownum=1
-while localtime <="2021-08-27 02:37:00":
+
+while localtime <="2021-08-30 06:30:00":
     localtime=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
-    se.moniter(ser.readline().decode("utf-8"))
+    
+    sensorlist=se.moniter(str(ser.readline().decode().replace('\n','')))
+    # for i in sensorlist:
+    #     print(i,end='\n')
+    # print(("-----------------end------------------"))
+    # print(str(ser.readline().decode().replace('\n','')))
     
 print("end")
-wb.save(name)
