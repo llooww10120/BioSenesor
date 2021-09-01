@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from openpyxl import load_workbook
-
+# from position import getdata,humidtest,getpos,plotmap
 
 
 def getdata(num):

@@ -1,5 +1,9 @@
 import tkinter as tk
 
+import position as pos
+import matplotlib.pyplot as plt
+import numpy as np
+from openpyxl import load_workbook
 
 
 def create_label(txt):
@@ -37,7 +41,19 @@ def define_layout(obj, cols=1, rows=1):
 
 def button_event01():
     print(var.get())
-    mylabel.configure(text='my favourite fruit is ' + var.get())
+    plt.ion()    # 打开交互模式
+    # 画第一幅图
+    plt.figure(1)
+    plt.plot(data1)   #data1为用于画图像的数据
+    
+    #画第一幅图和第二幅图之间可以继续运行其他程序
+    
+    plt.figure(2)
+    plt.plot(data2)  #data2为用于画图像的数据
+    
+    plt.ioff()   #需要在显示图像前关闭交互模式，即在plt.show()之前加入这段代码，如果不加这句代码，则所有的图像都只会一闪而过。
+    
+    plt.show()  #最后同时显示所有图片
 
 def button_event02():
     print(var.get())
@@ -61,10 +77,6 @@ div3 = tk.Frame(window,  width=div_size , height=div_size , bg='green')
 
 window.update()
 win_size = min( window.winfo_width(), window.winfo_height())
-print(win_size)
-
-
-
 
 div1.grid(column=0, row=0, padx=pad, pady=pad, rowspan=2, sticky=align_mode)
 div2.grid(column=1, row=0, padx=pad, pady=pad, sticky=align_mode)
@@ -77,8 +89,9 @@ lbl_title2 = tk.Label(div2, text="biosensor", bg='orange', fg='white')
 lbl_title1.grid(column=0, row=0, sticky=align_mode)
 lbl_title2.grid(column=0, row=1, sticky=align_mode)
 
+sensorlist,optionList = pos.getdata()
 
-optionList = ['2021-08-27 04:22:00','2021-08-27 04:22:02','張育瑋可以來做專題嗎']
+
 var = tk.StringVar(div1)
 var.set(optionList[0])
 
