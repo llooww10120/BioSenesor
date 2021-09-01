@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import serial
 import time
 import seat as se
@@ -17,4 +18,3 @@ while localtime <="2021-08-30 06:30:00":
     # print(str(ser.readline().decode().replace('\n','')))
     
 print("end")
-

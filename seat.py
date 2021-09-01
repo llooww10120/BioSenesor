@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 def moniter(test):
     if(test!="ALL DONE\r"):
