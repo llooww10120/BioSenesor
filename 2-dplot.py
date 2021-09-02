@@ -1,25 +1,36 @@
 import serial
-from openpyxl import Workbook
-from openpyxl import load_workbook
-import time
-
-ser = serial.Serial("COM3",115200)
-localtime=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
-name=localtime[:10]+".csv"
-wb=Workbook()
-ws=wb.active
-rownum=1
-
-while localtime <= "2021-09-01 17:50:00":
-    localtime=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
-    # content=str(ser.readline().decode("utf-8")[:-2])
-    # print(str(ser.readline().decode().replace('\n','')=="ALL DONE\r"))
+import datetime
+import csv
+import os
+def gettime():
+    dtime=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    localtime=dtime[11:0]
+    date=dtime[:10]
+    return date,localtime
+def getdata(ser):
+    data=[]
     if(str(ser.readline().decode().replace('\n',''))=="ALL DONE\r"):
-        ws.cell(row=rownum,column=1,value=localtime)
-        for i in range(2,258):
-            ws.cell(row=rownum,column=i,value=str(ser.readline().decode().replace('\n','')))
-        rownum+=1
+        for i in range(250):
+            data.append(str(ser.readline().decode().replace('\n','').replace('\r','')))
+    return data
 
-    # print(str(ser.readline().decode("utf-8")[:-2]))
-print("end")
-wb.save(name)
+def writedata(ser,name,time):
+    with open(name ,'w',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['time'] +[ str(i) for i in range(250)])
+        localtime=datetime.datetime.now().strftime("%H:%M:%S")
+        while localtime <= time:
+            data=[]
+            localtime=datetime.datetime.now().strftime("%H:%M:%S.%f")
+            # print(localtime)
+            data.append(str(localtime))
+            writer.writerow(data+getdata(ser))
+                # print(data)
+    print("end")
+if __name__=="__main__":
+    ser = serial.Serial("COM3",115200)
+    date,localtime=gettime()
+    name='./'+date+".csv"
+    print(str((datetime.datetime.now()+datetime.timedelta(minutes=1)).strftime("%H:%M:%S")))
+    writedata(ser,name,(datetime.datetime.now()+datetime.timedelta(minutes=1)).strftime("%H:%M:%S"))
+    

@@ -1,4 +1,4 @@
-//multiplexer's two level reader for constant resistance
+ //multiplexer's two level reader for constant resistance
 //Mux control
 int sig = A0;
 int s3 = 9;
@@ -18,7 +18,8 @@ float R1=18000;    //value of known resistance
 float R2=0;       //value of unknown resistance
 float buffer=0; 
 int number = 0;   //number of each resistance
-
+String reciver;
+boolean start=false;
 int muxChannel[16][16][10];
 
 void setup() {  
@@ -42,21 +43,37 @@ void setup() {
   digitalWrite(s2_2, LOW);
   digitalWrite(s3_2, LOW);
   digitalWrite(en, LOW);
-  
   Serial.begin(115200);
 //  Serial.println("Setup Finished...");
 }
 
 void loop() {
-  for (int i = 0; i < 16; i ++) {
+  if(Serial.available()>0){
+    reciver = Serial.readStringUntil('\n');
+    Serial.println(reciver);
+    if(reciver == "start"){
+      start = true;
+    }
+    else if(reciver == "break"){
+      start = false;
+    }
+    Serial.print(start);
+  }
+  if(start){
+      for (int i = 0; i < 16; i ++) {
+        readMux(i);
+      }
+      Serial.println("ALL DONE");
+   } 
+//  for (int i = 0; i < 16; i ++) {
 //    Serial.print("Multiplexer");
 //    Serial.println(i);
-    readMux(i);
+//    readMux(i);
 //     Serial.println("Done");
 //     Serial.println("");
-  }
+//  }
 //  Serial.println("ALL DONE");
-//  while(10);
+////  while(10);
 }
 
  //second level multiplexer select
@@ -121,18 +138,20 @@ int readMux(int channel) {
       readMux2(i);
     float value = analogRead(sig);// Get Lux value
     buffer=value*Vin;
-    Vout=(buffer)/1024.0;
+    Vout=(buffer)/1023.0;
 //    Serial.println(5*analogRead(sig)/1023.0*1000);
     buffer=Vout/(Vin-Vout); 
     R2=R1*buffer;
     Serial.print(number);
     Serial.print(":");
-    Serial.println(R2);
-    if(number<255){
+//    Serial.println(R2);
+    Serial.println(Vout);
+    if(number<250){
       number++;
       }else{
         number = 0;
-        }
+        break;
+      }
   }
 }
  
