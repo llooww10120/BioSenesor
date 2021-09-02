@@ -1,14 +1,54 @@
 import matplotlib.pyplot as plt
-plt.ion()    # 打开交互模式
-# 画第一幅图
-plt.figure(1)
-plt.plot([2,3,4])   #data1为用于画图像的数据
+import seat as se
+import read as re
+import position as pos
+import time
 
-#画第一幅图和第二幅图之间可以继续运行其他程序
-    
-plt.figure(2)
-plt.plot([2,3,4,1])  #data2为用于画图像的数据
-    
-plt.ioff()   #需要在显示图像前关闭交互模式，即在plt.show()之前加入这段代码，如果不加这句代码，则所有的图像都只会一闪而过。
-    
-plt.show()  #最后同时显示所有图片
+
+number,ohm  = sensorlist.split(":")
+listin = ["☐"]*300
+co_ohm = float(ohm)
+co_number = int(number)
+listin[co_number] = co_ohm
+bio =  pos.humidtest(listin)
+
+def in_test(bio,localtime):
+
+    fig = plt.figure()
+    plt.ion()
+    fig.clf()
+    fig.subtitle(localtime)
+    plt.imshow(bio,cmap="RdBu",vmax=1,vmin=-1)
+    plt.ioff()
+    plt.pause(0.2)
+    plt.ioff()
+    plt.show()
+
+if __name__=="__main__":
+    listin=[]
+
+    ser = serial.Serial("COM3",115200)
+
+    localtime=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
+
+    while localtime <="2021-09-01 17:17:00":
+        localtime=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
+        
+        sensorlist=se.moniter(str(ser.readline().decode().replace('\n','')))
+        # for i in sensorlist:
+        #     print(i,end='\n')
+        # print(("-----------------end------------------"))
+        # print(str(ser.readline().decode().replace('\n','')))
+        number,ohm  = sensorlist.split(":")
+        
+        co_ohm = float(ohm)
+        co_number = int(number)
+        listin[co_number] = co_ohm
+        bio =  pos.humidtest(listin)
+        in_test(bio,localtime)
+
+      
+    # print("end")
+
+
+
