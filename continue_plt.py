@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 from numpy import unicode_
-import seat as se
 import position as pos
 import serial
 import time
