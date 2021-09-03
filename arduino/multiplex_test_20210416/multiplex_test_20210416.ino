@@ -142,8 +142,8 @@ int readMux(int channel) {
 //    Serial.println(5*analogRead(sig)/1023.0*1000);
     buffer=Vout/(Vin-Vout); 
     R2=R1*buffer;
-    Serial.print(number);
-    Serial.print(":");
+//    Serial.print(number);
+//    Serial.print(":");
     Serial.println(R2);
 //    Serial.println(Vout);
     if(number<250){

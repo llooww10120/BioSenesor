@@ -11,7 +11,7 @@ def getdata(ser):
     data=[]
     if(str(ser.readline().decode().replace('\n',''))=="ALL DONE\r"):
         for i in range(250):
-            data.append(str(ser.readline().decode().replace('\n','').replace('\r','')))
+            data.append(float(str(ser.readline().decode().replace('\n','').replace('\r',''))))
         return data
 
 def writedata(ser,name,time):
@@ -32,9 +32,14 @@ if __name__=="__main__":
     name='./'+date+".csv"
     # print(str((datetime.datetime.now()+datetime.timedelta(minutes=1)).strftime("%H:%M:%S")))
     # writedata(ser,name,str((datetime.datetime.now()+datetime.timedelta(minutes=1)).strftime("%H:%M:%S")))
-    time=str((datetime.datetime.now()+datetime.timedelta(seconds=10)).strftime("%H:%M:%S"))
-    while localtime <= time:
-        localtime=datetime.datetime.now().strftime("%H:%M:%S:%f")
-        out=getdata(ser)
-        if out:
-            print(out)
+    time=str((datetime.datetime.now()+datetime.timedelta(minutes=10)).strftime("%H:%M:%S"))
+    with open(name ,'w',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['time'] +[ str(i) for i in range(250)])
+        while localtime <= time:
+            data=[]
+            localtime=datetime.datetime.now().strftime("%H:%M:%S:%f")
+            data.append(str(localtime))
+            out=getdata(ser)
+            if out:
+                writer.writerow(data+out)
