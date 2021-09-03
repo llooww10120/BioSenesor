@@ -32,7 +32,7 @@ if __name__=="__main__":
     name='./'+date+".csv"
     # print(str((datetime.datetime.now()+datetime.timedelta(minutes=1)).strftime("%H:%M:%S")))
     # writedata(ser,name,str((datetime.datetime.now()+datetime.timedelta(minutes=1)).strftime("%H:%M:%S")))
-    time=str((datetime.datetime.now()+datetime.timedelta(minutes=5)).strftime("%H:%M:%S"))
+    time=str((datetime.datetime.now()+datetime.timedelta(minutes=3)).strftime("%H:%M:%S"))
     with open(name ,'w',newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['time'] +[ str(i) for i in range(250)])

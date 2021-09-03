@@ -91,7 +91,7 @@ if __name__=="__main__":
             
             listin=[int(i.replace('.0','')) for i in listin]
             # (1,10)=10,(25,5)=243
-            sensorlist = [[listin[7]   ,listin[6]   ,listin[5]   ,listin[4]   ,listin[3]   ,listin[2]   ,listin[1]   ,listin[0]   ,listin[11]  ,listin[12]]  ,
+            sensorlist = [[listin[7]   ,listin[6]   ,listin[5]   ,listin[4]   ,listin[10]   ,listin[2]   ,listin[1]   ,listin[0]   ,listin[11]  ,listin[3]]  ,
                 [listin[9]  ,listin[8]   ,listin[12]  ,listin[13]  ,listin[14]  ,listin[15]  ,listin[23]  ,listin[22]  ,listin[21]  ,listin[20]]  ,
                 [listin[16]  ,listin[17]  ,listin[18]  ,listin[19]  ,listin[24]  ,listin[25]  ,listin[26]  ,listin[27]  ,listin[28]  ,listin[29]]  ,
                 [listin[30]  ,listin[31]  ,listin[39]  ,listin[38]  ,listin[37]  ,listin[36]  ,listin[35]  ,listin[34]  ,listin[33]  ,listin[32]]  ,
@@ -115,7 +115,7 @@ if __name__=="__main__":
                 [listin[213] ,listin[212] ,listin[211] ,listin[210] ,listin[209] ,listin[208] ,listin[216] ,listin[217] ,listin[218] ,listin[219]] ,
                 [listin[220] ,listin[221] ,listin[222] ,listin[223] ,listin[231] ,listin[230] ,listin[229] ,listin[228] ,listin[227] ,listin[226]] ,
                 [listin[225] ,listin[224] ,listin[232] ,listin[233] ,listin[234] ,listin[235] ,listin[236] ,listin[237] ,listin[238] ,listin[239]] ,
-                [listin[247] ,listin[246] ,listin[245] ,listin[244] ,listin[244] ,listin[242] ,listin[241] ,listin[240] ,listin[248] ,listin[249]]] 
+                [listin[247] ,listin[246] ,listin[245] ,listin[244] ,listin[243] ,listin[242] ,listin[241] ,listin[240] ,listin[248] ,listin[249]]] 
             # print(sensorlist)
             plt.figure()
             filename=str(num)+'.png'
