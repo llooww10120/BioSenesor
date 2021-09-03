@@ -80,7 +80,6 @@ if __name__=="__main__":
     sheet=wb["Sheet"]
     # print(getdata(2)[0])
     # plt.colorbar()
-
     num=1
     # plt.figure(figsize=(10,10))
     for i in range(1,2):
