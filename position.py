@@ -1,3 +1,4 @@
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -76,6 +77,7 @@ def plotmap(array,time,num):
     plt.savefig('./image/'+filename)
     plt.close('all')
 if __name__=="__main__":
+    matplotlib.use("Agg")
     name="2021-09-03.csv"
     # df = pd.read_csv(name)
     # index=[str(i) for i in range(250)]
@@ -86,7 +88,9 @@ if __name__=="__main__":
         for row in rows:
             listin=row[1:]
             test_time=row[0]
-            # (1,10)=10,(25,4)=244
+            for i in range(len(listin)):
+                listin[i]=int(listin[i])
+            # (1,10)=10,(25,5)=243
             sensorlist = [[listin[7]   ,listin[6]   ,listin[5]   ,listin[4]   ,listin[3]   ,listin[2]   ,listin[1]   ,listin[0]   ,listin[11]  ,listin[12]]  ,
                 [listin[9]  ,listin[8]   ,listin[12]  ,listin[13]  ,listin[14]  ,listin[15]  ,listin[23]  ,listin[22]  ,listin[21]  ,listin[20]]  ,
                 [listin[16]  ,listin[17]  ,listin[18]  ,listin[19]  ,listin[24]  ,listin[25]  ,listin[26]  ,listin[27]  ,listin[28]  ,listin[29]]  ,
@@ -111,22 +115,25 @@ if __name__=="__main__":
                 [listin[213] ,listin[212] ,listin[211] ,listin[210] ,listin[209] ,listin[208] ,listin[216] ,listin[217] ,listin[218] ,listin[219]] ,
                 [listin[220] ,listin[221] ,listin[222] ,listin[223] ,listin[231] ,listin[230] ,listin[229] ,listin[228] ,listin[227] ,listin[226]] ,
                 [listin[225] ,listin[224] ,listin[232] ,listin[233] ,listin[234] ,listin[235] ,listin[236] ,listin[237] ,listin[238] ,listin[239]] ,
-                [listin[247] ,listin[246] ,listin[245] ,listin[244] ,listin[243] ,listin[242] ,listin[241] ,listin[240] ,listin[248] ,listin[249]]] 
+                [listin[247] ,listin[246] ,listin[245] ,listin[244] ,listin[244] ,listin[242] ,listin[241] ,listin[240] ,listin[248] ,listin[249]]] 
             # print(sensorlist)
-            # plt.colorbar()
+            plt.figure()
             filename=str(num)+'.png'
-            plt.imshow(humidtest(sensorlist),cmap="RdBu",vmax=1,vmin=-1)
+            plt.imshow((sensorlist),cmap="RdBu",vmax=1,vmin=-1)
+            plt.colorbar()
+
             plt.title(test_time)
             plt.ioff()
             # print()
-            # plt.figure(figsize=(10,10))
              # for i in range(1,492):
              #     sensorlist,test_time=getdata(i)
             # plotmap(humidtest(sensorlist),test_time,num)   
             plt.savefig('./image/'+filename)
             plt.close('all')
+            plt.clf()
+            plt.cla()
             num+=1
-            time.sleep(0.1)
+            # time.sleep(0.1)
             # print(test_time)
             
     
