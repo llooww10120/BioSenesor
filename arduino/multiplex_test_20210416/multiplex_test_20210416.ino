@@ -19,7 +19,7 @@ float R2=0;       //value of unknown resistance
 float buffer=0; 
 int number = 0;   //number of each resistance
 String reciver;
-boolean start=false;
+boolean start=true;
 int muxChannel[16][16][10];
 
 void setup() {  
@@ -144,8 +144,8 @@ int readMux(int channel) {
     R2=R1*buffer;
     Serial.print(number);
     Serial.print(":");
-//    Serial.println(R2);
-    Serial.println(Vout);
+    Serial.println(R2);
+//    Serial.println(Vout);
     if(number<250){
       number++;
       }else{

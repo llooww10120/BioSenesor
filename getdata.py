@@ -1,38 +1,40 @@
 import serial
-from openpyxl import Workbook
-from openpyxl import load_workbook
+import datetime
+import csv
+import os
+def gettime():
+    dtime=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    localtime=dtime[11:0]
+    date=dtime[:10]
+    return date,localtime
+def getdata(ser):
+    data=[]
+    if(str(ser.readline().decode().replace('\n',''))=="ALL DONE\r"):
+        for i in range(250):
+            data.append(str(ser.readline().decode().replace('\n','').replace('\r','')))
+        return data
 
-import matplotlib.pyplot as plt
-import time
-ser = serial.Serial("COM3",9600)
-name="text1.xlsx"
-wb=Workbook()
-ws=wb.active
-ws["A1"]="Ohm"
-while True:
-    try:
-        content=float(ser.readline().decode("utf-8")[:-2])
-        ws.append([time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()),content])
-        print(content)
-    except:
-        break
-
-wb.save(name)
-wb=load_workbook(name)
-sheet=wb["Sheet"]
-a=sheet["A"]
-b=sheet["B"]
-ax=[]
-by=[]
-for cell in a:
-    ax.append(cell.value[-8:])
-
-for cell in b:
-    by.append(cell.value)
-
-
-fig = plt.figure()
-axx=fig.add_subplot(111)
-plt.plot(ax,by,color="blue",linewidth=2,marker="o")
-plt.savefig(name+".png")
-plt.show()
+def writedata(ser,name,time):
+    with open(name ,'w',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['time'] +[ str(i) for i in range(250)])
+        localtime=datetime.datetime.now().strftime("%H:%M:%S")
+        while localtime <= time:
+            data=[]
+            localtime=datetime.datetime.now().strftime("%H:%M:%S:%f")
+            # print(localtime)
+            data.append(str(localtime))
+            writer.writerow(getdata(ser))
+    print("end")
+if __name__=="__main__":
+    ser = serial.Serial("COM3",115200)
+    date,localtime=gettime()
+    name='./'+date+".csv"
+    # print(str((datetime.datetime.now()+datetime.timedelta(minutes=1)).strftime("%H:%M:%S")))
+    # writedata(ser,name,str((datetime.datetime.now()+datetime.timedelta(minutes=1)).strftime("%H:%M:%S")))
+    time=str((datetime.datetime.now()+datetime.timedelta(seconds=10)).strftime("%H:%M:%S"))
+    while localtime <= time:
+        localtime=datetime.datetime.now().strftime("%H:%M:%S:%f")
+        out=getdata(ser)
+        if out:
+            print(out)
