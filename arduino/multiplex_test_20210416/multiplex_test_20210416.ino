@@ -136,7 +136,7 @@ int readMux(int channel) {
     }
       for (int i = 0; i < 16; i ++) {
       readMux2(i);
-    float value = analogRead(sig);// Get Lux value
+    int value = analogRead(sig);// Get Lux value
 //    buffer=value*Vin;
 //    Vout=(buffer)/1023.0;
 //    Serial.println(5*analogRead(sig)/1023.0*1000);

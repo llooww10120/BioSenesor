@@ -88,8 +88,8 @@ if __name__=="__main__":
         for row in rows:
             listin=row[1:]
             test_time=row[0]
-            for i in range(len(listin)):
-                listin[i]=int(listin[i])
+            
+            listin=[int(i.replace('.0','')) for i in listin]
             # (1,10)=10,(25,5)=243
             sensorlist = [[listin[7]   ,listin[6]   ,listin[5]   ,listin[4]   ,listin[3]   ,listin[2]   ,listin[1]   ,listin[0]   ,listin[11]  ,listin[12]]  ,
                 [listin[9]  ,listin[8]   ,listin[12]  ,listin[13]  ,listin[14]  ,listin[15]  ,listin[23]  ,listin[22]  ,listin[21]  ,listin[20]]  ,
@@ -119,7 +119,7 @@ if __name__=="__main__":
             # print(sensorlist)
             plt.figure()
             filename=str(num)+'.png'
-            plt.imshow((sensorlist),cmap="RdBu",vmax=1,vmin=-1)
+            plt.imshow((sensorlist),cmap="RdBu",vmax=1023,vmin=0)
             plt.colorbar()
 
             plt.title(test_time)
