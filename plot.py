@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 from openpyxl import load_workbook
+import csv
+
 def time_cal(starttime,stoptime):
     endtime=int(stoptime[0:2])*3600+int(stoptime[3:5])*60+int(stoptime[-2:])
     begintime=int(starttime[0:2])*3600+int(starttime[3:5])*60+int(starttime[-2:])
@@ -8,10 +10,17 @@ def time_cal(starttime,stoptime):
     mint=(time_scale%3600)//60
     sec=((time_scale%3600)%60)
     return str(hour)+":"+str(mint)+":"+str(sec)
-wb=load_workbook('text1.xlsx')
-sheet=wb["Sheet"]
-a=sheet["A"]
-b=sheet["M"]
+
+with open("",newline='') as csvfile:
+        rows=csv.reader(csvfile)[1:]
+        for row in rows:
+            a = row[:2]    #選讀哪顆濕敏
+            b = row[:4]    #選讀哪顆施敏
+
+# wb=load_workbook('text1.xlsx')
+# sheet=wb["Sheet"]
+# a=sheet["A"]
+# b=sheet["M"]
 ax=[]
 by=[]
 for cell in a:
