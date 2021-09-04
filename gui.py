@@ -3,7 +3,6 @@ import tkinter as tk
 import position as pos
 import matplotlib.pyplot as plt
 import numpy as np
-from openpyxl import load_workbook
 
 
 def create_label(txt):
