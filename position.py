@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
-# from position import getdata,humidtest,getpos,plotmap
+import matplotlib
 
 def humidtest(sensor):
     biosensor = np.zeros([25,10])
@@ -14,8 +14,7 @@ def humidtest(sensor):
                     biosensor[a][b] = 0
             elif data > 300000 :         #錯誤_開路點
                     biosensor[a][b] = -1 
-            # elif data <100:
-            #         biosensor[a][b] =   #錯誤_短路點        
+            
     return biosensor
 
 
@@ -36,18 +35,10 @@ def plotmap(array,time,num):
     plt.imshow(array,cmap="RdBu",vmax=1,vmin=-1)
     plt.title(time)
     plt.ioff()
-    # plt.show()
-    # plt.show()
-
-    # print(str(time))
     plt.savefig('./image/'+filename)
-    # plt.close('all')
 if __name__=="__main__":
-    plt.use("Agg")
+    matplotlib.use("Agg")
     name="2021-09-03.csv"
-    # df = pd.read_csv(name)
-    # index=[str(i) for i in range(250)]
-    # print(df['1'])
     with open(name,newline='') as csvfile:
         rows=csv.reader(csvfile)
         num=1
@@ -82,25 +73,15 @@ if __name__=="__main__":
                 [listin[220] ,listin[221] ,listin[222] ,listin[223] ,listin[231] ,listin[230] ,listin[229] ,listin[228] ,listin[227] ,listin[226]] ,
                 [listin[225] ,listin[224] ,listin[232] ,listin[233] ,listin[234] ,listin[235] ,listin[236] ,listin[237] ,listin[238] ,listin[239]] ,
                 [listin[247] ,listin[246] ,listin[245] ,listin[244] ,listin[243] ,listin[242] ,listin[241] ,listin[240] ,listin[248] ,listin[249]]] 
-            # print(sensorlist)
             plt.figure()
             filename=str(num)+'.png'
             plt.imshow((sensorlist),cmap="RdBu",vmax=1023,vmin=0)
             plt.colorbar()
-
             plt.title(test_time)
             plt.ioff()
-            # print()
-             # for i in range(1,492):
-             #     sensorlist,test_time=getdata(i)
-            # plotmap(humidtest(sensorlist),test_time,num)   
             plt.savefig('./image/'+filename)
             plt.close('all')
             plt.clf()
             plt.cla()
             num+=1
-            # time.sleep(0.1)
-            # print(test_time)
-            
-    
-    # print(getdata(1))
+         
