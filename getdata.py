@@ -33,8 +33,8 @@ def writedata(ser,name,min):
     print("end")
 def picture(name):
     matplotlib.use("Agg")
-    with open(name,newline='') as csvfile:
-        rows=csv.reader(csvfile)[1:]
+    with open(name,'r',newline='') as csvfile:
+        rows=csv.reader(csvfile)
         num=1
         for row in rows:
             listin=row[1:]
@@ -42,7 +42,7 @@ def picture(name):
             listin=[int(i.replace('.0','')) for i in listin]
             plt.figure()
             filename=str(num)+'.png'
-            plt.imshow(senserlist.getsensorlistet(listin),cmap="RdBu",vmax=1023,vmin=0)
+            plt.imshow(senserlist.getsensorlist(listin),cmap="RdBu",vmax=1023,vmin=0)
             plt.colorbar()
             plt.title(test_time)
             plt.ioff()

@@ -12,11 +12,11 @@ int s2_2 = 6;
 int s1_2 = 5;
 int s0_2 = 4;
 
-float Vin=3.3;        //voltage at 5V pin of arduino
-float Vout=0;     //voltage at A0 pin of arduino
-float R1=18000;    //value of known resistance
-float R2=0;       //value of unknown resistance
-float buffer=0; 
+//float Vin=3.3;        //voltage at 5V pin of arduino
+//float Vout=0;     //voltage at A0 pin of arduino
+//float R1=18000;    //value of known resistance
+//float R2=0;       //value of unknown resistance
+//float buffer=0; 
 int number = 0;   //number of each resistance
 String reciver;
 boolean start=true;
@@ -102,7 +102,10 @@ int readMux2(int channel) {
 
   for (int i = 0; i < 4; i ++) {
     digitalWrite(controlPin[i], muxChannel[channel][i]);
+//    Serial.print(muxChannel[channel][i]);
   }
+//      Serial.print(':');
+
 }
 
   //first level multiplexer select
@@ -132,26 +135,33 @@ int readMux(int channel) {
 
   for (int i = 0; i < 4; i ++) {
     digitalWrite(controlPin[i], muxChannel[channel][i]);
+ 
  //   delay(10);
     }
-      for (int i = 0; i < 16; i ++) {
-      readMux2(i);
-    int value = analogRead(sig);// Get Lux value
+ 
+      for (int j = 0; j < 16; j ++) {
+//        Serial.print(channel);
+         delayMicroseconds(1000);
+
+        readMux2(j);
+               
+//      Serial.println()
+        int value = analogRead(sig);// Get Lux value
 //    buffer=value*Vin;
 //    Vout=(buffer)/1023.0;
 //    Serial.println(5*analogRead(sig)/1023.0*1000);
-    buffer=Vout/(Vin-Vout); 
-    R2=R1*buffer;
+//    buffer=Vout/(Vin-Vout); 
+//    R2=R1*buffer;
 //    Serial.print(number);
 //    Serial.print(":");
-    Serial.println(value);
+      Serial.println(value);
 //    Serial.println(Vout);
-    if(number<250){
-      number++;
-      }else{
-        number = 0;
-        break;
-      }
+      if(number<249){
+        number++;
+        }else{
+          number = 0;
+          break;
+        }
   }
 }
  

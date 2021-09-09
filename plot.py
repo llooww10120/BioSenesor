@@ -10,8 +10,8 @@ def time_cal(starttime,stoptime):
     mint=(time_scale%3600)//60
     sec=((time_scale%3600)%60)
     return str(hour)+":"+str(mint)+":"+str(sec)
-
-with open("",newline='') as csvfile:
+name=""
+with open(name,newline='') as csvfile:
         rows=csv.reader(csvfile)[1:]
         for row in rows:
             a = row[:2]    #選讀哪顆濕敏
