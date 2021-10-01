@@ -45,6 +45,8 @@ def picture(name):
             plt.imshow(senserlist.getsensorlist(listin),cmap="RdBu",vmax=1023,vmin=0)
             plt.colorbar()
             plt.title(test_time)
+            plt.xlabel("Unit 5mm", fontsize=10) #x軸標題
+            plt.ylabel("Unit 10mm", fontsize=10) #y軸標題
             plt.ioff()
             plt.savefig('./image/'+filename)
             plt.close('all')
@@ -55,7 +57,7 @@ if __name__=="__main__":
     ser = serial.Serial("COM3",115200)
     date,localtime=gettime()
     name='./'+date+".csv"
-    time=str((datetime.datetime.now()+datetime.timedelta(minutes=3)).strftime("%H:%M:%S"))
+    time=str((datetime.datetime.now()+datetime.timedelta(minutes=30)).strftime("%H:%M:%S"))
     with open(name ,'w',newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['time'] +[ str(i) for i in range(250)])
