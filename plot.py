@@ -20,7 +20,7 @@ def time_cal(starttime,stoptime):
 
 df = pd.read_csv("2021-09-11.csv")
 ax = df["time"]
-for i in range(1):
+for i in range(1,251):
     bx = df[str(i)]
     min_index=min(bx)
     min_time=ax[min_index]
