@@ -36,8 +36,8 @@ def writedata(ser,name,min):
     print("end")
 def rolling(name):
     matplotlib.use("Agg")
-    path='./testdata/2021-09-27/'+name
-    data = pd.read_csv(path+'/2021-09-29.csv',engine = "python")
+    path='./testdata/2021-10-02/'+name
+    data = pd.read_csv(path+'/2021-10-02.csv',engine = "python")
     for i in index:
         data[i]=data[i].rolling(10).mean()
     data = data[10:]
@@ -83,20 +83,20 @@ def picture(name):
             plt.cla()
             num+=1
 if __name__=="__main__":
-    ser = serial.Serial("COM3",115200)
-    date,localtime=gettime()
-    name='./'+date+".csv"
-    time=str((datetime.datetime.now()+datetime.timedelta(minutes=30)).strftime("%H:%M:%S"))
-    with open(name ,'w',newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(['time'] +[ str(i) for i in range(250)])
-        while localtime <= time:
-            data=[]
-            localtime=datetime.datetime.now().strftime("%H:%M:%S:%f")
-            data.append(str(localtime))
-            out=getdata(ser)
-            if out:
-                writer.writerow(data+out)
-    print('getdataend')
-    picture(name)
-    
+    # ser = serial.Serial("COM3",115200)
+    # date,localtime=gettime()
+    # name='./'+date+".csv"
+    # time=str((datetime.datetime.now()+datetime.timedelta(minutes=30)).strftime("%H:%M:%S"))
+    # with open(name ,'w',newline='') as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     writer.writerow(['time'] +[ str(i) for i in range(250)])
+    #     while localtime <= time:
+    #         data=[]
+    #         localtime=datetime.datetime.now().strftime("%H:%M:%S:%f")
+    #         data.append(str(localtime))
+    #         out=getdata(ser)
+    #         if out:
+    #             writer.writerow(data+out)
+    # print('getdataend')
+    # picture(name)
+    rolling('4')
