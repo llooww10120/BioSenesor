@@ -6,6 +6,8 @@ import matplotlib
 import matplotlib.pyplot as plt
 import senserlist
 import pandas as pd
+import matplotlib.animation as animation
+
 index=[str(i) for i in range(250)]
     
 def gettime():
@@ -42,21 +44,28 @@ def rolling(name):
         data[i]=data[i].rolling(10).mean()
     data = data[10:]
     num=1
+    ims=[]
     if not os.path.isdir(path+'/image-r/'):
         os.mkdir(path+'/image-r/')
     # print(len(data))
+    fig=plt.figure()
     for i in range(len(data)):
-        plt.figure()
-        filename=str(num)+'.png'
-        plt.imshow(senserlist.getsensorlist(data.iloc[i][1:]),cmap="RdBu",vmax=1023,vmin=0)
-        plt.colorbar()
+        
+        # filename=str(num)+'.png'
+        ims.append(plt.imshow(senserlist.getsensorlist(data.iloc[i][1:]),cmap="RdBu",vmax=1023,vmin=0))
+        # plt.colorbar()
         # plt.title(test_time)
-        plt.ioff()
-        plt.savefig(path+'/image-r/'+filename)
-        plt.close('all')
-        plt.clf()
-        plt.cla()
-        num+=1
+        # plt.ioff()
+        # plt.savefig(path+'/image-r/'+filename)
+        # plt.close('all')
+        # plt.clf()
+        # plt.cla()
+        # num+=1
+    ani = animation.ArtistAnimation(fig,ims,interval=200,repeat_delay=1000)
+    Writer= animation.writers['ffmpeg']
+    writer=Writer(fps=10,metadata=dict(artist='Ming'),bitrate=1800)
+    ani.save('test.mp4',writer=writer)
+
 def picture(name):
     path='./testdata/2021-09-27/'+name
     matplotlib.use("Agg")
@@ -65,23 +74,29 @@ def picture(name):
     with open(path+'/2021-09-27.csv','r',newline='') as csvfile:
         rows=csv.reader(csvfile)
         num=1
+        ims=[]
+        fig = plt.figure()
+
         for row in rows:
             listin=row[1:]
             test_time=row[0]
             listin=[int(i.replace('.0','')) for i in listin]
-            plt.figure()
             filename=str(num)+'.png'
-            plt.imshow(senserlist.getsensorlist(listin),cmap="RdBu",vmax=1023,vmin=0)
+            ims.append(plt.imshow(senserlist.getsensorlist(listin),cmap="RdBu",vmax=1023,vmin=0))
             plt.colorbar()
             plt.title(test_time)
-            plt.xlabel("Unit 5mm", fontsize=10) #x軸標題
-            plt.ylabel("Unit 10mm", fontsize=10) #y軸標題
+            plt.xlabel("Unit 5mm", fontsize=10) 
+            plt.ylabel("Unit 10mm", fontsize=10) 
             plt.ioff()
             plt.savefig(path+'/image/'+filename)
             plt.close('all')
             plt.clf()
             plt.cla()
             num+=1
+    ani = animation.ArtistAnimation(fig,ims,interval=200,repeat_delay=1000)
+    Writer= animation.writers['ffmpeg']
+    writer=Writer(fps=10,metadata=dict(artist='Ming'),bitrate=1800)
+    ani.save('test.mp4',writer=writer)
 if __name__=="__main__":
     # ser = serial.Serial("COM3",115200)
     # date,localtime=gettime()

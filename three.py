@@ -10,7 +10,7 @@ import matplotlib
 import os
 from matplotlib import cm
 
-fig = plt.figure(figsize=(8,6))
+fig = plt.figure(figsize=(10,10))
 index=[str(i) for i in range(250)]
 
 # x=[i for i in range(1,26) for j in range(1,11)]
@@ -59,8 +59,7 @@ def get_Z(date,name):
     return timelist,Z_list
 def update(i):
     plt.cla()
-    plt.title(timelist[i])
-
+    plt.title(timelist[i+10])
     ax.set_xlabel('x')
     ax.set_ylabel('y') 
     ax.set_zlabel('humid')#
@@ -68,9 +67,9 @@ def update(i):
     colors = cm.RdBu(norm(Z_list[i]))
     rcount, ccount, _ = colors.shape
     ax.set_zlim(0,1050)
-    surf=ax.plot_surface(X,Y,Z_list[i],  rcount=rcount, ccount=ccount,facecolors=colors,shade=False,linewidth=1)
+    surf=ax.plot_surface(X,Y,Z_list[i],  rcount=rcount, ccount=ccount,facecolors=colors,cmap='RdBu',shade=False,linewidth=1)
     surf.set_facecolor((0,0,0,0))
-    # plt.show()
+
 def animate(date,name):
     ani = animation.FuncAnimation(fig,update,frames=range(0,len(Z_list)),interval=100)
     Writer= animation.writers['ffmpeg']
@@ -78,7 +77,30 @@ def animate(date,name):
     ani.save('./testdata/'+date+'/'+name+'/movie.mp4',writer=writer)
     # update(400)
 if __name__=="__main__":
-    name='7'
     date='2021-10-02'
-    timelist,Z_list=get_Z(date,name)
-    animate(date,name)
+    dir=os.listdir(path='./testdata/'+date)
+    for i in dir:
+        path='./testdata/'+date+'/'+i
+        if os.path.isdir(path):
+            timelist,Z_list=get_Z(date,i)
+            if i == '1':
+                norm = plt.Normalize(0, 1023)
+                colorsa = cm.RdBu(norm(Z_list[0]))
+                rcount, ccount, _ = colorsa.shape
+                surf=ax.plot_surface(X,Y,Z_list[0], vmin=0,vmax=1023, rcount=rcount, ccount=ccount,facecolors=colorsa,cmap='RdBu',shade=False,linewidth=1)   
+                cbar = plt.colorbar(surf,ticks=[0,0.5,1])
+                cbar.ax.set_yticklabels(['0', '512', '1023'])  # vertically oriented colorbar 
+            animate(date,i)
+            print(i)
+
+    # for i in range()
+    # name='7'
+    # timelist,Z_list=get_Z(date,name)
+    # norm = plt.Normalize(0, 1023)
+    # colorsa = cm.RdBu(norm(Z_list[0]))
+    # rcount, ccount, _ = colorsa.shape
+
+    # surf=ax.plot_surface(X,Y,Z_list[0], vmin=0,vmax=1023, rcount=rcount, ccount=ccount,facecolors=colorsa,cmap='RdBu',shade=False,linewidth=1)    
+    # cbar = plt.colorbar(surf,ticks=[0,0.5,1])
+    # cbar.ax.set_yticklabels(['0', '512', '1023'])  # vertically oriented colorbar
+    # animate(date,name)
