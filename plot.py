@@ -20,6 +20,7 @@ ax = df["time"]
 for i in range(1):
     bx = df[str(11)]
     cx = df[str(25)]
+    dx = df[str(50)]
     y_stick = np.arange(400,1023,100)
  
     start_time=ax[0]
@@ -28,13 +29,13 @@ for i in range(1):
 
     plt.plot(ax,bx,color="blue",linewidth=1,marker="None")
     plt.plot(ax,cx,color="red",linewidth=1,marker="None")
+    plt.plot(ax,dx,color="green",linewidth=1,marker="None")
+    plt.legend(['drop center:x=25, y=9','beside center:x=23 ,y=6',"dry:x=20 ,y=4"])
     plt.xlabel("time")
 
     plt.ylabel("Ohm")
     plt.yticks(y_stick)
-    plt.show()
-    filename=str(i)+'.png'
-    plt.show()
-    # plt.savefig('./image/'+filename)
+    filename=str(0)+'.png'
+    plt.savefig('./image/'+filename)
     
 
