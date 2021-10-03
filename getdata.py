@@ -99,4 +99,4 @@ if __name__=="__main__":
     #             writer.writerow(data+out)
     # print('getdataend')
     # picture(name)
-    rolling('4')
+    rolling('7')

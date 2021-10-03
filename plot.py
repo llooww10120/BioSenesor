@@ -18,10 +18,10 @@ def time_cal(starttime,stoptime):
 #             a = row[:2]    #選讀哪顆濕敏
 #             b = row[:4]    #選讀哪顆施敏
 
-df = pd.read_csv("./testdata/2021-10-01/2/2021-10-01.csv")
+df = pd.read_csv("./testdata/2021-10-01/1/2021-10-01.csv")
 ax = df["time"]
-for i in range(1,251):
-    bx = df[str(i)]
+for i in range(1):
+    bx = df[str(11)]
     # min_index=min(bx)
     # min_time=ax[min_index]
     start_time=ax[0]
@@ -33,9 +33,10 @@ for i in range(1,251):
     plt.xlabel("time")
 
     plt.ylabel("Ohm")
+    plt.show()
     # plt.annotate(show_min,xytext=(ax[min_index],bx[min_index]),xy=(ax[min_index],bx[min_index]),color='r')
     filename=str(i)+'.png'
-    plt.savefig('./testdata/2021-10-01/2/image/'+filename)
+    # plt.savefig('./testdata/2021-10-01/2/image/'+filename)
     
 
 # ax=[]

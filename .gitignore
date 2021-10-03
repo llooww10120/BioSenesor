@@ -1,4 +1,5 @@
 
 /image
+*.mp4
 *.csv
 /testdata
