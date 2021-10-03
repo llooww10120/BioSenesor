@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from openpyxl import load_workbook
+import numpy as np
 import pandas as pd
 
 
@@ -12,53 +13,28 @@ def time_cal(starttime,stoptime):
     sec=((time_scale%3600)%60)
     return str(hour)+":"+str(mint)+":"+str(sec)
 
-# with open(name,newline='') as csvfile:
-#         rows=csv.reader(csvfile)[1:]
-#         for row in rows:
-#             a = row[:2]    #選讀哪顆濕敏
-#             b = row[:4]    #選讀哪顆施敏
 
 df = pd.read_csv("2021-10-02.csv")
 ax = df["time"]
-for i in range(1,51):
-    bx = df[str(i)]
-    # min_index=min(bx)
-    # min_time=ax[min_index]
+
+for i in range(1):
+    bx = df[str(11)]
+    cx = df[str(25)]
+    y_stick = np.arange(400,1023,100)
+ 
     start_time=ax[0]
     fig = plt.figure()
     axx=fig.add_subplot(111)
+
     plt.plot(ax,bx,color="blue",linewidth=1,marker="None")
-    # plt.plot(bx[min_index])
-    # show_min='['+str(bx[min_index])+']'+"\nused time :"+time_cal(start_time,min_time)
+    plt.plot(ax,cx,color="red",linewidth=1,marker="None")
     plt.xlabel("time")
 
     plt.ylabel("Ohm")
-    # plt.annotate(show_min,xytext=(ax[min_index],bx[min_index]),xy=(ax[min_index],bx[min_index]),color='r')
+    plt.yticks(y_stick)
+    plt.show()
     filename=str(i)+'.png'
-    plt.savefig('./image/'+filename)
+    plt.show()
+    # plt.savefig('./image/'+filename)
     
 
-# ax=[]
-# by=[]
-# for cell in a:
-#     ax.append(cell.value[-8:])
-# for cell in b:
-#     temp=float(cell.value.replace('_x000D_','')[3:])
-#     by.append(temp)
-# by=by[1:]
-# ax=ax[1:]
-
-# min_index=by.index(min(by))
-# min_time=ax[min_index]
-# start_time=ax[0]
-# fig = plt.figure()
-# axx=fig.add_subplot(111)
-# plt.plot(ax,by,color="blue",linewidth=1,marker="None")
-# plt.plot(by[min_index])
-# show_min='['+str(by[min_index])+']'+"\nused time :"+time_cal(start_time,min_time)
-# plt.xlabel("time")
-
-# plt.ylabel("Ohm")
-# plt.annotate(show_min,xytext=(ax[min_index],by[min_index]),xy=(ax[min_index],by[min_index]),color='r')
-# plt.savefig("test.png")
-# plt.show()
