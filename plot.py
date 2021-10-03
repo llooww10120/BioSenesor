@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from openpyxl import load_workbook
 import pandas as pd
-import csv
+
 
 def time_cal(starttime,stoptime):
     endtime=int(stoptime[0:2])*3600+int(stoptime[3:5])*60+int(stoptime[-2:])
@@ -20,20 +20,20 @@ def time_cal(starttime,stoptime):
 
 df = pd.read_csv("2021-10-02.csv")
 ax = df["time"]
-for i in range(1,251):
+for i in range(1,51):
     bx = df[str(i)]
-    min_index=min(bx)
-    min_time=ax[min_index]
+    # min_index=min(bx)
+    # min_time=ax[min_index]
     start_time=ax[0]
     fig = plt.figure()
     axx=fig.add_subplot(111)
     plt.plot(ax,bx,color="blue",linewidth=1,marker="None")
-    plt.plot(bx[min_index])
-    show_min='['+str(bx[min_index])+']'+"\nused time :"+time_cal(start_time,min_time)
+    # plt.plot(bx[min_index])
+    # show_min='['+str(bx[min_index])+']'+"\nused time :"+time_cal(start_time,min_time)
     plt.xlabel("time")
 
     plt.ylabel("Ohm")
-    plt.annotate(show_min,xytext=(ax[min_index],bx[min_index]),xy=(ax[min_index],bx[min_index]),color='r')
+    # plt.annotate(show_min,xytext=(ax[min_index],bx[min_index]),xy=(ax[min_index],bx[min_index]),color='r')
     filename=str(i)+'.png'
     plt.savefig('./image/'+filename)
     
