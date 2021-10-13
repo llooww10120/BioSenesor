@@ -74,7 +74,7 @@ def animate(date,name):
     ani = animation.FuncAnimation(fig,update,frames=range(0,len(Z_list)),interval=100)
     Writer= animation.writers['ffmpeg']
     writer=Writer(fps=10,metadata=dict(artist='Ming'),bitrate=1800)
-    ani.save('./testdata/'+date+'/'+name+'/movie.mp4',writer=writer)
+    ani.save('./testdata/'+date+'/'+name+'/3-dmovie.mp4',writer=writer)
     # update(400)
 if __name__=="__main__":
     date='2021-10-02'
