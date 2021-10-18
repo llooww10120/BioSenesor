@@ -77,7 +77,7 @@ def animate(date,name):
     ani.save('./testdata/'+date+'/'+name+'/3-dmovie.mp4',writer=writer)
     # update(400)
 if __name__=="__main__":
-    date='2021-10-02'
+    date='2021-10-14'
     dir=os.listdir(path='./testdata/'+date)
     for i in dir:
         path='./testdata/'+date+'/'+i

@@ -37,6 +37,7 @@ def writedata(ser,name,min):
     print("end")
 def update(i):
     plt.cla()
+    plt.title(date_data[i+10])
     plt.imshow(senserlist.getsensorlist(data.iloc[i][1:]),cmap="RdBu",vmax=1023,vmin=0)
 
 def rolling(name):
@@ -104,17 +105,18 @@ if __name__=="__main__":
     #             writer.writerow(data+out)
     # print('getdataend')
     # picture(name)
-    date='2021-10-02'
+    date='2021-10-14'
 
     fig = plt.figure()
 
 
-    path='./testdata/2021-10-02/'+'1'
-    data = pd.read_csv(path+'/2021-10-02.csv',engine = "python")
+    path='./testdata/2021-10-14/'+'1'
+    data = pd.read_csv(path+'/2021-10-14.csv',engine = "python")
+    date_data= data['time']
     for i in index:
         data[i]=data[i].rolling(10).mean()
     data = data[10:]
-    if not os.path.isdir(path+'/image-r/'):
+    if not os.path.isdir(path+'/image-s/'):
         os.mkdir(path+'/image-s/')
     pl=plt.imshow(senserlist.getsensorlist(data.iloc[0][1:]),cmap="RdBu",vmax=1023,vmin=0)
 
