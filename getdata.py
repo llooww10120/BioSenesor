@@ -89,27 +89,29 @@ def picture(name):
             plt.cla()
             num+=1
 if __name__=="__main__":
-    # ser = serial.Serial("COM3",115200)
-    # date,localtime=gettime()
-    # name='./'+date+".csv"
-    # time=str((datetime.datetime.now()+datetime.timedelta(minutes=1)).strftime("%H:%M:%S"))
-    # with open(name ,'w',newline='') as csvfile:
-    #     writer = csv.writer(csvfile)
-    #     writer.writerow(['time'] +[ str(i) for i in range(250)])
-    #     while localtime <= time:
-    #         data=[]
-    #         localtime=datetime.datetime.now().strftime("%H:%M:%S:%f")
-    #         data.append(str(localtime))
-    #         out=getdata(ser)
-    #         if out:
-    #             writer.writerow(data+out)
-    # print('getdataend')
+
+    ser = serial.Serial("COM3",115200)
+    date,localtime=gettime()
+    name='./'+date+".csv"
+    time=str((datetime.datetime.now()+datetime.timedelta(minutes=10)).strftime("%H:%M:%S"))
+    with open(name ,'w',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['time'] +[ str(i) for i in range(250)])
+        while localtime <= time:
+            data=[]
+            localtime=datetime.datetime.now().strftime("%H:%M:%S:%f")
+            data.append(str(localtime))
+            out=getdata(ser)
+            if out:
+                writer.writerow(data+out)
+    print('getdataend')
     # picture(name)
-    date='2021-11-16'
+    # date='2021-10-14'
 
-    fig = plt.figure()
 
-    chil='/1'
+    # fig = plt.figure()
+
+    chil='/2'
     path='./testdata/'+date+chil
     data = pd.read_csv(path+'/'+date+'.csv',engine = "python")
     date_data= data['time']
