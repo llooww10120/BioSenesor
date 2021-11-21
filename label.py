@@ -13,7 +13,7 @@ for i in range(len(ax)):
         if df[str(j)][i] < 800:
             label[str(j)][i] = 1
         else:
-            label[str(j)][i] = 0
+            label.loc[str(j),i] = 0
 
 
 for i in range(len(ax)):
@@ -37,6 +37,7 @@ count_false = 0
 ratio = 0
 test = []
 right = []
+
 with open('label11_16_right.csv','r',newline='') as csvfile:
     df_test=csv.reader(csvfile)
     for i in df_test:
