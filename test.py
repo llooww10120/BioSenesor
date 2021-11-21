@@ -12,7 +12,7 @@ def get_label_data(name):
         for i in data:
             time.append(i[0])
             a = []
-            for j in i[2:] :
+            for j in i[2:-10] :
                 if float(j)<threshold:
                     a.append(1)
                 else:
@@ -31,10 +31,14 @@ def get_label_data(name):
 # plt.show()
 if __name__=='__main__':
     number=[]
-    time,data = get_label_data('./testdata/2021-10-14/1/2021-10-14.csv')
+    date ='2021-10-22'
+    path = './testdata/'+ date + '/1/'
+    time,data = get_label_data(path + date + '.csv')
     for i in data:
         number.append(i.count(1))
-    # print(time)
     plt.figure(figsize=(10,10),dpi=100,linewidth=2)
     plt.plot(time,number)
-    plt.show()
+    plt.ylim([0,250])
+    plt.xlabel('time(ms)')
+    plt.ylabel('number')
+    plt.savefig(path+'humid.png')
