@@ -37,6 +37,7 @@ count_false = 0
 ratio = 0
 test = []
 right = []
+
 with open('label11_16_right.csv','r',newline='') as csvfile:
     df_test=csv.reader(csvfile)
     for i in df_test:
