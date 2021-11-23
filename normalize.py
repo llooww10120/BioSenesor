@@ -19,9 +19,13 @@ def initial():
 def humidtest(value,mean,sig):
     print((value-mean)/sig)
 
+def movingaverage(data,window_size):
+    sum=np.cumsum(data,dtype=int)
+    sum[window_size:] = sum[window_size] - sum[:-window_size]
+    return sum[window_size-1:]/window_size
+
 if __name__=="__main__":
-    with open('./meanandstd.json','r') as f:
-        dic=json.load(f)
-    mean,sig=(dic['11'])
-    print((938-mean)/sig)
-    # initial()
+    name = '2021-09-07.csv'
+    df  = pd.read_csv(name)
+    # nmp=df['1'].rolling(10).mean()
+    print(nmp)
