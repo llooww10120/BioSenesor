@@ -1,5 +1,4 @@
 # BioSenesor
-## getdata
 
 ### 各程式用途
 
