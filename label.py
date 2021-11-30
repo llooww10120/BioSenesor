@@ -10,10 +10,10 @@ ax = df["time"]
 
 for i in range(len(ax)):
     for j in range(250):
-        if df[str(j)][i] < 800:
+        if df[str(j)][i] < 760:
             label[str(j)][i] = 1
         else:
-            label.loc[str(j),i] = 0
+            label[str(j)][i] = 0
 
 
 for i in range(len(ax)):
