@@ -22,8 +22,8 @@ def get_label_data(name):
                     a.append(0)
             label.append(a)
     return time[1:],label[1:]
-
-name = "label.csv"
+date = "./testdata/2021-10-22/1/"
+name = date + "2021-10-22.csv"
 
 ax,bx = get_label_data(name)
 
@@ -37,7 +37,7 @@ for i in range(len(bx)):
                 cx.append(0)
             
 
-print(cx)
+# print(cx)
 fig = plt.figure()
 plt.plot(ax,cx,'ro')
 
@@ -45,4 +45,8 @@ plt.legend(['state'])
 plt.xlabel("time(ms)")
 plt.ylabel("state")
 plt.yticks([0,1])
-# plt.show()
+<<<<<<< HEAD
+plt.show()
+=======
+plt.savefig(date+'state.png')
+>>>>>>> 8495b4b1437baa4003988ac3dbe0901abfeb19fb
