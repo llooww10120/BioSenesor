@@ -32,7 +32,7 @@ def get_label_data(name):
 if __name__=='__main__':
     print("start!!")
     number=[]
-    date ='2021-10-22'
+    date ='2021-10-19-1'
     path = './csv/'
     time,data = get_label_data(path + date + '.csv')
     for i in data:
@@ -43,5 +43,5 @@ if __name__=='__main__':
     plt.xlabel('time(ms)')
     plt.ylabel('number')
     plt.savefig(path+date+'_humid.png')
-    plt.show()
+    #plt.show()
     print("finish!!")

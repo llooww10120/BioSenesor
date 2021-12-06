@@ -45,4 +45,8 @@ plt.legend(['state'])
 plt.xlabel("time(ms)")
 plt.ylabel("state")
 plt.yticks([0,1])
+<<<<<<< HEAD
+plt.show()
+=======
 plt.savefig(date+'state.png')
+>>>>>>> 8495b4b1437baa4003988ac3dbe0901abfeb19fb
