@@ -1,6 +1,12 @@
 import serial
 import datetime
 import csv
+import os
+import matplotlib
+import matplotlib.pyplot as plt
+import senserlist
+import pandas as pd
+import matplotlib.animation as animation
 index=[str(i) for i in range(250)]
     
 def gettime():
@@ -15,14 +21,6 @@ def getdata(ser):
             data.append(float(str(ser.readline().decode().replace('\n','').replace('\r',''))))
         return data
 
-<<<<<<< HEAD
-if __name__=="__main__":
-    print('getdata start')
-    ser = serial.Serial("COM3",115200)
-    date,localtime=gettime()
-    name='./'+date+".csv"
-    time=str((datetime.datetime.now()+datetime.timedelta(seconds=10)).strftime("%H:%M:%S"))
-=======
 def writedata(ser,name,min):
     with open(name ,'w',newline='') as csvfile:
         writer = csv.writer(csvfile)
@@ -90,12 +88,12 @@ def picture(name):
             plt.clf()
             plt.cla()
             num+=1
-def getdata(time):
+def getdata_time(time):
     ser = serial.Serial("COM3",115200)
     date,localtime=gettime()
     name='./'+date+".csv"
-    time=str((datetime.datetime.now()+datetime.timedelta(minutes=1)).strftime("%H:%M:%S"))
->>>>>>> 9d6e39bbe6888dd7db20f2bc6d5769a7b76f2f25
+    time=str((datetime.datetime.now()+datetime.timedelta(minutes=time)).strftime("%H:%M:%S"))
+    print(time)
     with open(name ,'w',newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['time'] +[ str(i) for i in range(250)])
@@ -107,8 +105,6 @@ def getdata(time):
             if out:
                 writer.writerow(data+out)
     print('getdataend')
-<<<<<<< HEAD
-=======
     
 def save_mpeg4(date):
     fig = plt.figure()
@@ -132,6 +128,5 @@ def save_mpeg4(date):
     # writer=Writer(fps=10,metadata=dict(artist='Ming'),bitrate=1800)
     ani.save('./testdata/'+date+chil+'/2-dmovie.mp4')
 if __name__=="__main__":
-   
-    print('')
->>>>>>> 9d6e39bbe6888dd7db20f2bc6d5769a7b76f2f25
+    getdata_time(60)
+    # save_mpeg4('2021-12-06')
