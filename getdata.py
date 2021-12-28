@@ -88,23 +88,25 @@ def picture(name):
             plt.clf()
             plt.cla()
             num+=1
-def getdata(time):
+def getdata_time(time):
     ser = serial.Serial("COM3",115200)
     date,localtime=gettime()
     name='./'+date+".csv"
-    time=str((datetime.datetime.now()+datetime.timedelta(minutes=1)).strftime("%H:%M:%S"))
+    time=str((datetime.datetime.now()+datetime.timedelta(minutes=time)).strftime("%H:%M:%S"))
+    print(time)
     with open(name ,'w',newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['time'] +[ str(i) for i in range(250)])
         while localtime <= time:
             data=[]
             localtime=datetime.datetime.now().strftime("%H:%M:%S:%f")
+            print(localtime)
             data.append(str(localtime))
             out=getdata(ser)
             if out:
                 writer.writerow(data+out)
     print('getdataend')
-    
+
 def save_mpeg4(date):
     fig = plt.figure()
 
@@ -128,4 +130,4 @@ def save_mpeg4(date):
     ani.save('./testdata/'+date+chil+'/2-dmovie.mp4')
 if __name__=="__main__":
    
-    print('')
+    getdata_time(1)

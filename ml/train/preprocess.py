@@ -20,8 +20,8 @@ from tensorflow import keras
 import seaborn as sns
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plts
-kernel=np.array([[1,1,1],[4,10,4],[1,1,1]])/27
-re_kernel=np.array([[1,1,1],[1,0,1],[1,1,1]])
+kernel=np.array([[1,1,1],[5,10,5],[1,1,1]])/26
+re_kernel=np.array([[1,1,1],[1,0,1],[1,1,1]])/8
 def getsensorlist(listin):
     sensorlist = np.array([[listin[7]   ,listin[6]   ,listin[5]   ,listin[4]   ,listin[3]   ,listin[2]   ,listin[1]   ,listin[0]   ,listin[11]  ,listin[10]]  , #1
         [listin[9]  ,listin[8]   ,listin[12]  ,listin[13]  ,listin[14]  ,listin[15]  ,listin[23]  ,listin[22]  ,listin[21]  ,listin[20]]  , #2
@@ -44,7 +44,8 @@ def getsensorlist(listin):
         [listin[179] ,listin[178] ,listin[177] ,listin[176] ,listin[184] ,listin[185] ,listin[186] ,listin[187] ,listin[188] ,listin[189]] ,    #19
         [listin[190] ,listin[191] ,listin[199] ,listin[198] ,listin[197] ,listin[196] ,listin[195] ,listin[194] ,listin[193] ,listin[192]] ,    #20
         [listin[200] ,listin[201] ,listin[202] ,listin[203] ,listin[204] ,listin[205] ,listin[206] ,listin[207] ,listin[215] ,listin[214]] ,    #21
-        [listin[213] ,listin[212] ,listin[211] ,listin[210] ,listin[209] ,listin[208] ,listin[216] ,listin[217] ,listin[218] ,listin[219]]])# ,    #22
+        [listin[213] ,listin[212] ,listin[211] ,listin[210] ,listin[209] ,listin[208] ,listin[216] ,listin[217] ,listin[218] ,listin[219]] ,    #22
+        [listin[220] ,listin[221] ,listin[222] ,listin[223] ,listin[231] ,listin[230] ,listin[229] ,listin[228] ,listin[227] ,listin[226]]])
     return sensorlist
 
 def drop_open_sensor(data):
@@ -81,7 +82,7 @@ def get_x(data):
                 temp =[]
                 for ki in range(3):
                     for kj in range(3):
-                        temp.append((1023-d[i+ki-1][j+kj-1])*kernel[ki][kj])
+                        temp.append((1-(d[i+ki-1][j+kj-1])/1023)*kernel[ki][kj])
                 re.append(temp)
     # re=np.array(re,dtype=float)
     return re
@@ -98,7 +99,7 @@ def load_data():
         x.extend(get_x(i))
 
     x=np.array(x,dtype=float)
-    print(x.shape)
+
     y=[]
     for i in ans_files:
         y.extend(get_y(i))
@@ -107,6 +108,10 @@ def load_data():
     new_x,new_y = balance_data(x,y)
 
     X_train,X_test,y_train,y_test = train_test_split(new_x,new_y,test_size = 0.25,random_state = 33)
+    print('X_train:',X_train.shape)
+    print('X_test:',X_test.shape)
+    print('y_train:',y_train.shape)
+    print('y_test:',y_test.shape)
 
     return X_train,X_test,y_train,y_test
 def get_y(label_data):
@@ -136,6 +141,31 @@ def get_test_data(xpath,ypath):
     ty = np.array(ty,dtype=int)
 
     return balance_data(tx,ty)
+def get_serial_X_data(data):
+    da = drop_open_sensor(data)
+    l,y,x = da.shape
+    new_data = np.zeros((y-2,x-2,l,3,3))
+    for j in range(1,y-1):
+        for k in range(1,x-1):
+            for i in range(l):
+                for ki in range(3):
+                    for kj in range(3):
+                        new_data[j-1][k-1][i][ki][kj] = da[i][j+ki-1][k+kj-1]*kernel[ki][kj]
+    return new_data
+
+def get_serial_Y_data(label_data):
+    label_list = []
+    for i in range(len(label_data)):
+        temp = (getsensorlist(label_data[i:i+1].values[0][1:]))
+        label_list.append(temp)
+    label_list = np.array(label_list,dtype=int)
+    y_l,y_y,y_x = label_list.shape
+    new_label = np.zeros((y_y-2,y_x-2,y_l))
+    for j in range(1,y_y-1):
+        for k in range(1,y_x-1):
+            for i in range(y_l):
+                new_label[j-1][k-1][i] = label_list[i][j][k]
+    return new_label
 if __name__ == '__main__':
     print('')
     xpath = './ml/train/test/2021-12-04_3.csv'

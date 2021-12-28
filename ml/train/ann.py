@@ -17,10 +17,10 @@ model = Sequential()
 # Add Input layer, 隱藏層(hidden layer) 有 256個輸出變數
 model.add(Dense(units=128, input_dim=9, kernel_initializer='normal', activation='relu')) 
 # Add output layer
-model.add(Dense(units=2, kernel_initializer='normal', activation='softmax'))
+model.add(Dense(units=2, kernel_initializer='normal', activation='sigmoid'))
 
 # 編譯: 選擇損失函數、優化方法及成效衡量方式
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy']) 
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']) 
 x_Train_norm = X_train
 x_Test_norm = X_test
 
@@ -29,7 +29,7 @@ y_TestOneHot = np_utils.to_categorical(y_test)
 
 logdir=os.path.join("logs", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
 tensorboard_callback = tf.keras.callbacks.TensorBoard(logdir, histogram_freq=1)
-train_history = model.fit(x=x_Train_norm, y=y_TrainOneHot, validation_split=0.2, epochs=10, batch_size=800, verbose=2, callbacks=[tensorboard_callback])
+train_history = model.fit(x=x_Train_norm, y=y_TrainOneHot, validation_split=0.2, epochs=10, batch_size=100, verbose=2, callbacks=[tensorboard_callback])
 
 scores = model.evaluate(X_test, y_TestOneHot)  
 print()  
@@ -38,8 +38,6 @@ print("\t[Info] Accuracy of testing data = {:2.1f}%".format(scores[1]*100.0))
 X = x_Test_norm[0:,:]
 predictions = np.argmax(model.predict(X), axis=-1)
 # get prediction result
-np.set_printoptions(threshold=100)
-print(predictions)
 
 import seaborn as sns
 from sklearn.metrics import confusion_matrix
@@ -47,26 +45,44 @@ import matplotlib.pyplot as plts
 
 np.sum((y_test==1))
 
-confusion_matrix(y_test, predictions, labels=None, sample_weight=None)
+print(confusion_matrix(y_test, predictions, labels=None, sample_weight=None))
 
-# model.save('/content/drive/MyDrive/train/model.h5')
+model.save('./ml/train/model.h5')
 
 # Commented out IPython magic to ensure Python compatibility.
 # %tensorboard --logdir logs
-xpath = './ml/train/test/2021-12-05.csv'
-ypath = './ml/train/test/2021-12-05_ans.csv'
-tx,ty = get_test_data(xpath,ypath)
+# xpath = './ml/train/test/2021-12-05.csv'
+# ypath = './ml/train/test/2021-12-05_ans.csv'
+# tx,ty = get_test_data(xpath,ypath)
 
-new_tx,new_ty = balance_data(tx,ty)
+# new_tx,new_ty = balance_data(tx,ty)
 
-new_y_TrainOneHot = np_utils.to_categorical(new_ty) 
+# new_y_TrainOneHot = np_utils.to_categorical(new_ty) 
 
 
-scores = model.evaluate(new_tx,new_y_TrainOneHot,batch_size=100)
+# scores = model.evaluate(new_tx,new_y_TrainOneHot,batch_size=100)
 
-print()  
-print("\t[Info] Accuracy of testing data = {:2.1f}%".format(scores[1]*100.0))
+# print()  
+# print("\t[Info] Accuracy of testing data = {:2.1f}%".format(scores[1]*100.0))
 
-nn_predictions = np.argmax(model.predict(new_tx), axis=-1)
-print(confusion_matrix(new_ty, nn_predictions, labels=None, sample_weight=None))
+# nn_predictions = np.argmax(model.predict(new_tx), axis=-1)
+# print(confusion_matrix(new_ty, nn_predictions, labels=None, sample_weight=None))
+# threshold = (1023-800)*10/27
+# y=[]
+# for i in range(len(X_test)):
+#     if X_test[i][5]> threshold:
+#         y.append(1)
+#     else:
+#         y.append(0)
+# y = np.array(y , dtype = int)
+# c=0
+# f=0
+# for i in range(len(y)):
+#     if y[i] == y_test[i]:
+#         c = c+1
+#     else :
+#         f = f+1
+# ratio = c/len(y)
+# mat = confusion_matrix(y_test,y)
+
 

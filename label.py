@@ -121,10 +121,10 @@ def compute(new_y,new_right):
 
 
 if __name__=="__main__":
-    name = "2021-12-05.csv"
-    name_test = '12-05_label.csv'
-    name_label = '2021-12-05label.csv'
-    
+    name = "./ml/train/test/2021-12-05.csv"
+    name_test = './ml/train/test/10-26_label.csv'
+    name_label = './ml/train/test/2021-12-05_ans.csv'
+    print(name[-14:])
     threshold = 800
     hard_decision(name,threshold,name_test)
     x_l,y_l = data(name_test,name_label)
